@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iker Salinas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            color: white;
+        }
+        .foto-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #333;
+            overflow: hidden;
+            border: 4px solid #9146ff;
+        }
+        .foto-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .foto-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 40px;
+        }
+        h1 {
+            margin: 0 0 20px;
+            font-size: 2.5em;
+            color: #fff;
+        }
+        .links {
+            margin: 30px 0;
+        }
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            background: #9146ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .links a:hover {
+            transform: scale(1.05);
+        }
+        .links a.fifakit {
+            background: #e63946;
+        }
+        .links a.Mandarina{
+            background: #df5e08;
+        }
+        .descripcion {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .rating {
+            margin: 25px 0;
+        }
+        .rating-label {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .estrellas {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .estrella {
+            font-size: 36px;
+            cursor: pointer;
+            color: #444;
+            transition: color 0.2s;
+        }
+        .estrella.llena {
+            color: #ffd700;
+        }
+        .estrella.media {
+            position: relative;
+        }
+        .estrella.media::after {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            width: 50%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="foto-container">
+        <div class="foto-placeholder"><img src="tu-foto.jpeg"></div>
+    </div>
+    
+    <h1>Iker Salinas</h1>
+    
+    <div class="links">
+        <a href="https://www.twitch.tv/1k3rg4mer" target="_blank">Twitch</a>
+        <a href="http://127.0.0.1:5500/pagina2.html" target="_blank" class="Mandarina">Mandarina CF</a>
+        <a href="https://fifakitcreator.com/showcase/user/902040" target="_blank" class="fifakit">FIFAkits</a>
+    </div>
+    
+    <div class="descripcion">
+        Jugador de Banco Mendoza, Creador del Mandarina CF, Creador de contenido
+    </div>
+    
+    <div class="rating">
+        <div class="rating-label">Mi Rating:</div>
+        <div class="estrellas" id="rating">
+            <span class="estrella" data-valor="1">★</span>
+            <span class="estrella" data-valor="2">★</span>
+            <span class="estrella" data-valor="3">★</span>
+            <span class="estrella" data-valor="4">★</span>
+            <span class="estrella" data-valor="5">★</span>
+        </div>
+    </div>
+    
+    <script>
+        const estrellas = document.querySelectorAll('.estrella');
+        let ratingActual = 0;
+        
+        function actualizarEstrellas(valor) {
+            ratingActual = valor;
+            estrellas.forEach((estrella, index) => {
+                estrella.classList.remove('llena', 'media');
+                if (index < Math.floor(valor)) {
+                    estrella.classList.add('llena');
+                } else if (index < valor) {
+                    estrella.classList.add('media');
+                }
+            });
+        }
+        
+        estrellas.forEach(estrella => {
+            estrella.addEventListener('click', () => {
+                let valor = parseInt(estrella.dataset.valor);
+                if (valor === ratingActual) {
+                    valor = valor - 0.5;
+                    if (valor < 0.5) valor = 0;
+                }
+                actualizarEstrellas(valor);
+            });
+            
+            estrella.addEventListener('mouseenter', () => {
+                let valor = parseInt(estrella.dataset.valor);
+                actualizarEstrellas(valor);
+            });
+        });
+        
+        document.getElementById('rating').addEventListener('mouseleave', () => {
+            actualizarEstrellas(ratingActual);
+        });
+        
+        actualizarEstrellas(0);
+    </script>
+</body>
+</html>
